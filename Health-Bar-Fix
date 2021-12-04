@@ -1,0 +1,51 @@
+local HealthBar = Instance.new("ScreenGui")
+local Container = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
+local Health = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+ 
+HealthBar.Name = "HealthBar"
+HealthBar.Parent = gethui()
+HealthBar.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+HealthBar.IgnoreGuiInset = true
+ 
+Container.Name = "Container"
+Container.Parent = HealthBar
+Container.AnchorPoint = Vector2.new(1, 0)
+Container.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+Container.BackgroundTransparency = 0.400
+Container.Position = UDim2.new(1, -60, 0, 26)
+Container.Size = UDim2.new(0, 100, 0, 4)
+Container.Visible = false
+ 
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = Container
+ 
+UIStroke.Parent = Container
+ 
+Health.Name = "Health"
+Health.Parent = Container
+Health.AnchorPoint = Vector2.new(1, 0)
+Health.BackgroundColor3 = Color3.fromRGB(0, 255, 0)
+Health.BackgroundTransparency = 0.400
+Health.Position = UDim2.new(1, 0, 0, 0)
+Health.Size = UDim2.new(0.5, 0, 1, 0)
+ 
+UICorner_2.CornerRadius = UDim.new(1, 0)
+UICorner_2.Parent = Health
+ 
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+ 
+while wait() do
+    pcall(function()
+        local Humanoid = LocalPlayer.Character.Humanoid
+        local Ratio = Humanoid.Health/Humanoid.MaxHealth
+ 
+        Container.Visible = Ratio ~= 1
+ 
+        Health.Size = UDim2.new(Ratio,0,1,0)
+        Health.BackgroundColor3 = Color3.fromHSV(Ratio*.3, 1, 1)
+    end)
+end
